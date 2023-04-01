@@ -12,7 +12,9 @@
 		<PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.4" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.MiddlewareAnalysis" Version="7.0.4" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
+		<PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" Version="3.1.32" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.5" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	</ItemGroup>

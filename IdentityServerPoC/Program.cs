@@ -4,8 +4,11 @@ using MongoDB.Bson;
 using IdentityServerPoC.Entities;
 using IdentityServerPoC.Settings;
 using IdentityServerPoC.Support;
+using Microsoft.AspNetCore.MiddlewareAnalysis;
+using System.Diagnostics;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+builder.Services.Insert(0, ServiceDescriptor.Transient<IStartupFilter, AnalysisStartupFilter>());
 
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
 builder.Services.AddDefaultIdentity<ApplicationUser>()
@@ -38,6 +41,13 @@ builder.Services.AddIdentityServer(options =>
 builder.Services.AddLocalApiAuthentication();
 
 WebApplication app = builder.Build();
+
+DiagnosticListener listener = app.Services.GetRequiredService<DiagnosticListener>();
+// Create an instance of the AnalysisDiagnosticAdapter using the IServiceProvider
+// so that the ILogger is injected from DI
+AnalysisDiagnosticAdapter observer = ActivatorUtilities.CreateInstance<AnalysisDiagnosticAdapter>(app.Services);
+// Subscribe to the listener with the SubscribeWithAdapter() extension method
+using var disposable = listener.SubscribeWithAdapter(observer);
 
 if (app.Environment.IsDevelopment())
 {
